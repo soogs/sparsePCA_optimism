@@ -219,8 +219,11 @@ shen1 <- rsvd_spca(dat = X2, R = 3, lambda = c(3, 3, 1), penalty = "soft", maxit
 shen2 <- rsvd_spca(dat = X2, R = 3, lambda = c(3, 3, 1), penalty = "soft", maxiter = 10000, inits = "multistart", nrstart = 500)
 
 shen1$loss
-shen2$bunch[[which.min(shen2$LOSS)]]
+hi <- shen2$bunch[[which.min(shen2$LOSS)]]
 
+
+shen1 <- rsvd_spca(dat = X2, R = 3, lambda = ya$lasso, penalty = "soft", maxiter = 10000, inits = "SVD")
+shen2 <- rsvd_spca(dat = X2, R = 3, lambda = ya$lasso, penalty = "soft", maxiter = 10000, inits = "multistart", nrstart = 500)
 
 # scad penalty for later ####
 # shenhuang_scad <- function(dat, uinit, vinit, lambda, maxiter, R){
