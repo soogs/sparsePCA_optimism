@@ -1,2 +1,4 @@
 # sparsePCA_optimism
-erroneous practices in sparse PCA literature
+- Bring to light erroneous practices in sparse PCA literature
+- Suggest possible ways to resolve the issues
+
