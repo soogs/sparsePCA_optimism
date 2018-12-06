@@ -53,7 +53,7 @@ zou_eigen <- cbind(v1,v2)
   xwprandom <- sample(100000, 1000)
 
 
-for(i in 1:100){
+for(i in 1:10){
   
   # xwp generation #
   xwp <- Wsparsedata(n = 300, p = 10, k = 2, n_zeros = 6, Winit = NULL, empirical = FALSE, seed = xwprandom[i], VAFx = 0.7)
@@ -62,7 +62,7 @@ for(i in 1:100){
   # dat <- scaleData(xwp$X)
   
   # at i = 40, this takes a very long time
-  w_lasso <- findLasso(dat = dat, zeros = c(6,6), R = 2, whichfunction = "spca_adj", init = 1000, maxiterOut = 1000, maxiterIn = 1000)$lasso
+  w_lasso <- findLasso(dat = dat, zeros = c(6,6), R = 2, whichfunction = "spca_adj", init = 1000, maxiterOut = 5, maxiterIn = 1000)$lasso
   
   result <- spca_adj(x = dat, K = 2, para = w_lasso, type = "predictor", sparse = "penalty", inits = "SVD")
   
@@ -89,9 +89,12 @@ for(i in 1:100){
   
   # zou_dat <- scaleData(zou_dat)
   
-  zou_lasso <- findLasso(dat = zou_dat, zeros = c(6,6), R = 2, whichfunction = "spca_adj", init = 1e+8, maxiterOut = 5, maxiterIn = 1000)$lasso
+  # findlasso is only necessary for the sparse weights generation,
+  # because we are not comparing the loss between the zou generation and the
+  # sparse weights generation.
+  # zou_lasso <- findLasso(dat = zou_dat, zeros = c(6,6), R = 2, whichfunction = "spca_adj", init = 1e+8, maxiterOut = 5, maxiterIn = 1000)$lasso
   
-  zou_result <- spca_adj(x = zou_dat, K = 2, para = zou_lasso, type = "predictor", sparse = "penalty", inits = "SVD")
+  zou_result <- spca_adj(x = zou_dat, K = 2, para = c(6,6), type = "predictor", sparse = "varnum", inits = "SVD")
   
   zoutucker <- RegularizedSCA::TuckerCoef(zou_eigen, zou_result$loadings)
   
