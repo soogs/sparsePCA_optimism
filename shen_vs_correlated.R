@@ -29,7 +29,7 @@ library(MASS)
   
   # ld_eigenvalues <- c(200, 100, rep(0.000001,8))
 
-# hdlss setup
+# hdlss setup #
   # p = 500
   # n = 50
   # 2 eigenvectors
